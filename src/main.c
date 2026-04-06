@@ -5,7 +5,7 @@
 #define X_MAX 18
 #define Y_MAX 11
 
-void render_tile(Texture2D *tilemap, int x, int y) {
+void render_tile(Texture2D *tilemap, int x, int y, int pos_x, int pos_y) {
   if (x > X_MAX)
     return;
 
@@ -17,8 +17,8 @@ void render_tile(Texture2D *tilemap, int x, int y) {
 
   Rectangle sourceRec = {frameWidth * x, frameHeight * y, frameWidth,
                          frameHeight};
-  Rectangle destRec = {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f,
-                       frameWidth * 2.0f, frameHeight * 2.0f};
+  Rectangle destRec = {(float)pos_x, (float)pos_y, frameWidth * 2.0f,
+                       frameHeight * 2.0f};
 
   Vector2 origin = {frameWidth, frameHeight};
   int rotation = 0;
@@ -26,37 +26,30 @@ void render_tile(Texture2D *tilemap, int x, int y) {
   DrawTexturePro(*tilemap, sourceRec, destRec, origin, (float)rotation, WHITE);
 }
 
-void frame(Texture2D *tile, int x, int y) {
+void frame(Texture2D *tilemap) {
+  float frameWidth = (float)tilemap->width / 18;
+  float frameHeight = (float)tilemap->height / 11;
+
   BeginDrawing();
   ClearBackground(BLACK);
 
-  render_tile(tile, x, y);
+  for (int x = 0; x < 18; x++) {
+    for (int y = 0; y < 11; y++) {
+      render_tile(tilemap, x, y, 2 * x * frameWidth, frameHeight + 2 * y * frameHeight);
+    }
+  }
 
   EndDrawing();
 }
 
 int main(int argc, const char **argv) {
-  int x = 0;
-  int y = 0;
   InitWindow(SCREEN_HEIGHT, SCREEN_WIDTH, "Strategio");
 
   Texture2D tilemap = LoadTexture("assets/Tilemap/tilemap_packed.png");
 
-  SetTargetFPS(10);
+  SetTargetFPS(60);
   while (!WindowShouldClose()) {
-    if (x < X_MAX) {
-      x++;
-    } else {
-      x = 0;
-      y++;
-    }
-
-    frame(&tilemap, x, y);
-
-    if (x == X_MAX && y == Y_MAX) {
-      x = 0;
-      y = 0;
-    }
+    frame(&tilemap);
   }
   CloseWindow();
 
