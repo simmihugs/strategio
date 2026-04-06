@@ -10,3 +10,5 @@ $ meson setup build
 $ meson compile -C build
 ```
 
+## Rendering tilemap
+![Rendering Tilemap](screenshots/screenshot1.png)
