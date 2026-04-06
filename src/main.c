@@ -14,24 +14,27 @@ void frame(Texture2D *tilemap, int frame_counter) {
   for (int x = 0; x < 30; x++) {
     for (int y = 0; y < 30; y++) {
       render_tile(tilemap, TILE_GRASS_FLOWERS, 2 * x * frameWidth,
-                  frameHeight + 2 * y * frameHeight);
+                  frameHeight + 2 * y * frameHeight, false);
     }
   }
 
   render_tile(tilemap, TILE_BLD_RED_FACTORY, 2 * 3 * frameWidth,
-              frameHeight + 2 * 17 * frameHeight);
+              frameHeight + 2 * 17 * frameHeight, false);
 
-  if (frame_counter % 2 == 0)
-      render_tile(tilemap, TILE_SOLDIER_BLUE_IDLE, 2 * 10 * frameWidth,
-	  frameHeight + 2 * 7 * frameHeight);
-  else
-      render_tile(tilemap, TILE_SOLDIER_BLUE_WALK, 2 * 10 * frameWidth,
-	  frameHeight + 2 * 7 * frameHeight);
-      
+  if (frame_counter % 2 == 0) {
+    render_tile(tilemap, TILE_SOLDIER_BLUE_IDLE, 2 * 10 * frameWidth,
+                frameHeight + 2 * 7 * frameHeight, false);
+  } else {
+    render_tile(tilemap, TILE_SOLDIER_BLUE_WALK, 2 * 10 * frameWidth,
+                frameHeight + 2 * 7 * frameHeight, false);
+  }
+
+  render_tile(tilemap, TILE_SOLDIER_BLUE_WALK, 2 * 15 * frameWidth,
+              frameHeight + 2 * 12 * frameHeight, true);
 
   // moving plane
   render_tile(tilemap, TILE_PLANE_GREY, 2 * frame_counter * frameWidth,
-              frameHeight + 2 * 4 * frameHeight);
+              frameHeight + 2 * 4 * frameHeight, false);
 
   EndDrawing();
 }

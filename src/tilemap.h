@@ -185,19 +185,24 @@ static const TileCoord TILE_MAP[] = {
     [TILE_ICON_CLOUD] = {16, 9},
 };
 
-void render_tile(Texture2D *tilemap, TileType type, int pos_x, int pos_y) {
+void render_tile(Texture2D *tilemap, TileType type, int pos_x, int pos_y, bool flipped) {
   TileCoord coord = TILE_MAP[type];
 
   float frameWidth = (float)tilemap->width / 18;
   float frameHeight = (float)tilemap->height / 11;
 
+  float sourceWidth = frameWidth;
+  if (flipped)
+      sourceWidth *= -1;
+  
   Rectangle sourceRec = {frameWidth * coord.x, frameHeight * coord.y,
-                         frameWidth, frameHeight};
+                         sourceWidth, frameHeight};
   Rectangle destRec = {(float)pos_x, (float)pos_y, frameWidth * 2.0f,
                        frameHeight * 2.0f};
 
   Vector2 origin = {frameWidth, frameHeight};
   int rotation = 0;
 
-  DrawTexturePro(*tilemap, sourceRec, destRec, origin, (float)rotation, WHITE);
+
+  DrawTexturePro(*tilemap, sourceRec, destRec, origin, (float)rotation, WHITE);  
 }
