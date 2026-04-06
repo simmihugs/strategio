@@ -20,8 +20,14 @@ void frame(Texture2D *tilemap, int frame_counter) {
 
   render_tile(tilemap, TILE_BLD_RED_FACTORY, 2 * 3 * frameWidth,
               frameHeight + 2 * 17 * frameHeight);
-  render_tile(tilemap, TILE_SOLDIER_BLUE_IDLE, 2 * 10 * frameWidth,
-              frameHeight + 2 * 7 * frameHeight);
+
+  if (frame_counter % 2 == 0)
+      render_tile(tilemap, TILE_SOLDIER_BLUE_IDLE, 2 * 10 * frameWidth,
+	  frameHeight + 2 * 7 * frameHeight);
+  else
+      render_tile(tilemap, TILE_SOLDIER_BLUE_WALK, 2 * 10 * frameWidth,
+	  frameHeight + 2 * 7 * frameHeight);
+      
 
   // moving plane
   render_tile(tilemap, TILE_PLANE_GREY, 2 * frame_counter * frameWidth,
