@@ -26,30 +26,41 @@ void render_tile(Texture2D *tilemap, int x, int y, int pos_x, int pos_y) {
   DrawTexturePro(*tilemap, sourceRec, destRec, origin, (float)rotation, WHITE);
 }
 
-void frame(Texture2D *tilemap) {
+void frame(Texture2D *tilemap, int frame_counter) {
   float frameWidth = (float)tilemap->width / 18;
   float frameHeight = (float)tilemap->height / 11;
 
   BeginDrawing();
   ClearBackground(BLACK);
 
-  for (int x = 0; x < 18; x++) {
-    for (int y = 0; y < 11; y++) {
-      render_tile(tilemap, x, y, 2 * x * frameWidth, frameHeight + 2 * y * frameHeight);
+  for (int x = 0; x < 30; x++) {
+    for (int y = 0; y < 30; y++) {
+      render_tile(tilemap, 1, 0, 2 * x * frameWidth,
+                  frameHeight + 2 * y * frameHeight);
     }
   }
+
+  render_tile(tilemap, 10, 2, 2 * 3 * frameWidth,
+              frameHeight + 2 * 17 * frameHeight);
+  render_tile(tilemap, 17, 5, 2 * 10 * frameWidth,
+              frameHeight + 2 * 7 * frameHeight);
+
+  //moving plane
+  render_tile(tilemap, 10, 8, 2 * frame_counter * frameWidth,
+              frameHeight + 2 * 4 * frameHeight);
 
   EndDrawing();
 }
 
 int main(int argc, const char **argv) {
+  int i = 0;
   InitWindow(SCREEN_HEIGHT, SCREEN_WIDTH, "Strategio");
 
   Texture2D tilemap = LoadTexture("assets/Tilemap/tilemap_packed.png");
 
-  SetTargetFPS(60);
+  SetTargetFPS(10);
   while (!WindowShouldClose()) {
-    frame(&tilemap);
+    frame(&tilemap, i++);
   }
   CloseWindow();
 

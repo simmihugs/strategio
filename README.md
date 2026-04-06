@@ -11,4 +11,8 @@ $ meson compile -C build
 ```
 
 ## Rendering tilemap
+### First attempt of rendering the entire tilemap
 ![Rendering Tilemap](screenshots/screenshot1.png)
+
+### Rending a self desigend field and some characters
+![Rendering Tilemap](screenshots/screenshot2.png)
